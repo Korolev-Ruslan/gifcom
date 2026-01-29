@@ -1,0 +1,180 @@
+.icon-with-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon-with-text .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.icon-with-text .icon-text {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-size: 14px;
+  min-height: 36px;
+}
+
+.sidebar-item .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.sidebar-item .icon-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 24px;
+}
+
+.sidebar-item:hover {
+  background: var(--hover-bg);
+  border-color: var(--text-secondary);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-size: 14px;
+  min-height: 36px;
+}
+
+.theme-toggle-btn .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn .icon-text {
+  line-height: 24px;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--text-secondary);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.icon-svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.icon-svg-stroke {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-text-flex {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-text-flex .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-text-flex .text {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.icon-text-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-text-inline .icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.icon-text-inline .text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-before .icon {
+  order: 1;
+}
+
+.icon-before .text {
+  order: 2;
+}
+
+.icon-after .icon {
+  order: 2;
+}
+
+.icon-after .text {
+  order: 1;
+}
+
+@media (max-width: 768px) {
+  .sidebar-item {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .theme-toggle-btn {
+    padding: 8px;
+    gap: 8px;
+  }
+}

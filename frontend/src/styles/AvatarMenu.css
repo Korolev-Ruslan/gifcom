@@ -1,0 +1,60 @@
+.avatar-menu {
+  position: fixed;
+  width: 220px;
+  background: var(--bg-primary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow-hover);
+  z-index: 2000;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.avatar-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.avatar-menu li {
+  padding: 0;
+  margin: 2px 0;
+}
+
+.avatar-menu a,
+.avatar-menu button {
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.avatar-menu a:hover,
+.avatar-menu button:hover {
+  background: var(--hover-bg);
+}
+
+.avatar-menu .logout {
+  color: var(--danger-color);
+}
+
+.avatar-menu .logout:hover {
+  background: rgba(239, 68, 68, 0.15);
+}

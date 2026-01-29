@@ -1,0 +1,186 @@
+.notifications-container {
+  padding: 30px;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notifications-header h2 {
+  margin: 0;
+  font-size: 26px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.mark-all-btn {
+  padding: 10px 20px;
+  background: var(--primary-color);
+  color: white;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.mark-all-btn:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  background: var(--bg-primary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.notification-item.unread {
+  background: var(--bg-secondary);
+  border-left-color: var(--primary-color);
+}
+
+.notification-item:hover {
+  box-shadow: var(--glass-shadow);
+}
+
+.notification-content {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.notification-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notification-text {
+  flex: 1;
+}
+
+.notification-text p {
+  margin: 0 0 6px 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notification-text small {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mark-read-btn,
+.delete-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.mark-read-btn:hover {
+  background: var(--success-color);
+  border-color: var(--success-color);
+  color: white;
+}
+
+.delete-btn:hover {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 24px;
+  background: var(--bg-primary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.15);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  color: var(--danger-color);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .notifications-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .notifications-header h2 {
+    font-size: 22px;
+  }
+
+  .mark-all-btn {
+    width: 100%;
+  }
+
+  .notification-item {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .notification-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

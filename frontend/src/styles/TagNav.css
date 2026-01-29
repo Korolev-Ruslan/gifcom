@@ -1,0 +1,56 @@
+.tag-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  align-items: center;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.tag-nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tag-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tag-nav::-webkit-scrollbar-thumb {
+  background: rgba(200, 200, 200, 0.5);
+  border-radius: 4px;
+}
+
+.tag-nav-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.tag-nav-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--text-secondary);
+}
+
+.tag-nav-btn.active {
+  background: rgba(6, 95, 212, 0.9);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  color: white;
+  border-color: rgba(6, 95, 212, 0.5);
+}

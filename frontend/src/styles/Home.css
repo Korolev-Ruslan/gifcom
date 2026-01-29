@@ -1,0 +1,78 @@
+.main-content {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  background-color: var(--bg-primary);
+  min-height: calc(100vh - 60px);
+}
+
+.gifs-grid {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.gif-column {
+  background-clip: padding-box !important;
+  width: auto !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.gif-column:first-child {
+  padding-left: 0 !important;
+}
+
+.gif-card {
+  background: var(--bg-primary) !important;
+  backdrop-filter: var(--backdrop-blur) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  position: relative !important;
+  margin: 0 0 16px 0 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: auto !important;
+  display: block !important;
+}
+
+.gif-card img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: contain !important;
+  background: var(--bg-secondary);
+}
+
+.loading-more,
+.end-message {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.15) !important;
+  backdrop-filter: var(--backdrop-blur) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur) !important;
+  color: var(--danger-color) !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  margin: 16px !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.main-content > p {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-tertiary);
+}
+

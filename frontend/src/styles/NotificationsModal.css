@@ -1,0 +1,154 @@
+.notifications-modal {
+  position: fixed;
+  width: 380px;
+  max-height: 540px;
+  background: rgb(255 255 255);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow-hover);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+}
+
+.modal-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-body {
+  padding: 12px;
+  overflow: auto;
+  flex: 1;
+}
+
+.notifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notification {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  border-color: rgba(0, 0, 0, 0.200);
+}
+
+.notification:hover {
+  background: var(--hover-bg);
+}
+
+.notification.unread {
+  background: rgba(99, 101, 241, 0);
+  border-color: rgba(0, 0, 0, 0.300);
+}
+
+.notification .left .icon {
+  font-size: 24px;
+}
+
+.notification .content {
+  flex: 1;
+}
+
+.notification .content .text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.notification .content .meta {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+}
+
+.notification .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn.small {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.btn.small:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-hover);
+}
+
+.btn.small.danger {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--danger-color);
+}
+
+.btn.small.danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: 30px 12px;
+  font-size: 14px;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.15);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  color: var(--danger-color);
+  padding: 14px;
+  border-radius: 10px;
+  margin: 12px;
+  font-size: 13px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}

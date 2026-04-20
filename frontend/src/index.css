@@ -4,14 +4,15 @@
   --bg-tertiary: rgba(200, 220, 255, 0.35);
   --bg-card: rgba(255, 255, 255, 0.2);
   --bg-hover: rgba(255, 255, 255, 0.35);
-  --text-primary: #1a1a2e;
+  --text-primary: #000000;
   --text-secondary: #2d2d44;
-  --text-tertiary: #5a5a7a;
+  --text-tertiary: #000000;
   --border-color: rgba(255, 255, 255, 0.4);
   --border-hover: rgba(255, 255, 255, 0.6);
   --navbar-bg: rgba(255, 255, 255, 0);
   --navbar-text: #ffffff;
-  --hover-bg: rgba(255, 255, 255, 0.3);
+  --logo-color: rgb(0, 0, 0);
+  --hover-bg: rgba(0, 0, 0, 0.1);
   --active-bg: rgba(255, 255, 255, 0.45);
   --backdrop-blur: blur(20px);
   --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
@@ -24,19 +25,20 @@
 }
 
 :root[data-theme='dark'] {
-  --bg-primary: rgb(0, 0, 0);
-  --bg-secondary: rgba(40, 40, 80, 0.5);
+  --bg-primary: rgb(18, 18, 18);
+  --bg-secondary: rgba(0, 0, 0, 0);
   --bg-tertiary: rgba(60, 60, 120, 0.45);
   --bg-card: rgba(40, 40, 80, 0.5);
   --bg-hover: rgba(80, 80, 150, 0.5);
-  --text-primary: #f0f0ff;
+  --text-primary: #ffffff;
   --text-secondary: #d0d0ff;
-  --text-tertiary: #9090bb;
+  --text-tertiary: #ffffff7e;
   --border-color: rgba(255, 255, 255, 0.15);
   --border-hover: rgba(255, 255, 255, 0.3);
-  --navbar-bg: rgba(0, 0, 0, 0);
+  --navbar-bg: rgb(0, 0, 0);
   --navbar-text: #e0e0ff;
-  --hover-bg: rgba(80, 80, 160, 0.5);
+  --logo-color: rgb(255, 255, 255);
+  --hover-bg: rgba(255, 255, 255, 0.1);
   --active-bg: rgba(100, 100, 180, 0.6);
   --backdrop-blur: blur(20px);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -65,8 +67,12 @@ body {
   animation: gradientBG 15s ease infinite;
   background-attachment: fixed;
   color: var(--text-primary);
-  transition: color 0.3s ease;
+  transition: color 0.1s ease, background 0.1s ease;
   min-height: 100vh;
+}
+
+[data-theme='dark'] body {
+  background: var(--bg-primary);
 }
 
 @keyframes gradientBG {
@@ -76,7 +82,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
 }
@@ -85,13 +91,12 @@ button {
   background: var(--bg-primary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
-  border: 1px solid var(--border-color);
   color: var(--text-primary);
-  border-radius: 8px;
+  border: none;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 button:active {
@@ -138,14 +143,13 @@ button.danger:hover,
 input, textarea {
   padding: 12px 16px;
   border: 1px solid var(--border-color);
-  border-radius: 12px;
   font-size: 14px;
   font-family: inherit;
   background: var(--bg-primary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 input:focus, textarea:focus {
@@ -178,4 +182,3 @@ textarea::placeholder {
   border-radius: 12px;
   margin: 10px 0;
 }
-

@@ -1,5 +1,29 @@
 import React from "react";
 
+export const HamburgerIcon = ({
+  size = 24,
+  color = "currentColor",
+  strokeWidth = 2,
+  ...props
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M3 12h18" />
+    <path d="M3 6h18" />
+    <path d="M3 18h18" />
+  </svg>
+);
+
 export const HomeIcon = ({
   size = 24,
   color = "currentColor",
@@ -130,6 +154,24 @@ export const NotificationsIcon = ({ size = 24, strokeWidth = 2, ...props }) => (
   >
     <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
     <path d="M9.5 18a2.10 2.10 0 0 0 5 0" />
+  </svg>
+);
+
+export const SearchIcon = ({ size = 24, strokeWidth = 2, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="11" cy="11" r="8" />
+    <path d="M21 21l-4.35-4.35" />
   </svg>
 );
 

@@ -77,7 +77,7 @@
   border-radius: 12px;
   padding: 20px;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .feature-card:hover {
@@ -112,7 +112,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   width: 100%;
 }
 
@@ -166,7 +166,7 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .btn-primary:hover {

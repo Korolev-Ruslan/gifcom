@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { adminApi } from '../api/api'
+import { API_ORIGIN } from '../config'
 import Masonry from 'react-masonry-css'
 import '../styles/AdminPanel.css'
 
@@ -8,12 +9,14 @@ function AdminPanel() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedGif, setSelectedGif] = useState(null)
+  const [selectedIds, setSelectedIds] = useState(new Set())
   const [editData, setEditData] = useState({
     title: '',
     description: '',
     tags: ''
   })
   const [isSaving, setIsSaving] = useState(false)
+  const [isBulkApproving, setIsBulkApproving] = useState(false)
 
   useEffect(() => {
     fetchPendingGifs()
@@ -100,6 +103,11 @@ function AdminPanel() {
       const token = localStorage.getItem('token')
       await adminApi.approve(id, token)
       setPendingGifs(gifs => gifs.filter(g => g.id !== id))
+      setSelectedIds(prev => {
+        const next = new Set(prev)
+        next.delete(id)
+        return next
+      })
       closeGifModal()
     } catch (err) {
       setError('Ошибка при одобрении')
@@ -112,10 +120,56 @@ function AdminPanel() {
         const token = localStorage.getItem('token')
         await adminApi.reject(id, token)
         setPendingGifs(gifs => gifs.filter(g => g.id !== id))
+        setSelectedIds(prev => {
+          const next = new Set(prev)
+          next.delete(id)
+          return next
+        })
         closeGifModal()
       } catch (err) {
         setError('Ошибка при отклонении')
       }
+    }
+  }
+
+  const toggleSelect = (id) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
+
+  const clearSelection = () => {
+    setSelectedIds(new Set())
+  }
+
+  const selectAll = () => {
+    setSelectedIds(new Set(pendingGifs.map(g => g.id)))
+  }
+
+  const handleBulkApprove = async () => {
+    if (selectedIds.size === 0) return
+    const confirmMsg = `Одобрить ${selectedIds.size} GIF?`
+    if (!window.confirm(confirmMsg)) return
+
+    setIsBulkApproving(true)
+    try {
+      const token = localStorage.getItem('token')
+      const ids = Array.from(selectedIds)
+      for (const gifId of ids) {
+        await adminApi.approve(gifId, token)
+      }
+      setPendingGifs(gifs => gifs.filter(g => !selectedIds.has(g.id)))
+      clearSelection()
+    } catch (err) {
+      setError('Ошибка при массовом одобрении')
+    } finally {
+      setIsBulkApproving(false)
     }
   }
 
@@ -135,6 +189,28 @@ function AdminPanel() {
       {error && <div className="error">{error}</div>}
 
       <h2>{pendingGifs.length} GIF, на проверке</h2>
+      {pendingGifs.length > 0 && (
+        <div className="bulk-actions">
+          <div className="bulk-left">
+            <button className="bulk-btn" onClick={selectAll}>
+              Выбрать все
+            </button>
+            <button className="bulk-btn" onClick={clearSelection}>
+              Снять выделение
+            </button>
+          </div>
+          <div className="bulk-right">
+            <span className="bulk-count">Выбрано: {selectedIds.size}</span>
+            <button
+              className="bulk-approve-btn"
+              onClick={handleBulkApprove}
+              disabled={selectedIds.size === 0 || isBulkApproving}
+            >
+              {isBulkApproving ? 'Одобряем...' : 'Одобрить выбранные'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {pendingGifs.length === 0 ? (
         <p>Нет GIF для проверки</p>
@@ -147,10 +223,18 @@ function AdminPanel() {
           {pendingGifs.map((gif) => (
             <div 
               key={gif.id} 
-              className="gif-card"
+              className={`gif-card admin-gif-card ${selectedIds.has(gif.id) ? 'selected' : ''}`}
               onClick={() => openGifModal(gif)}
             >
-              <img src={`http://localhost:3000/${gif.filename}`} alt={gif.title} />
+              <label className="gif-select" onClick={(e) => e.stopPropagation()}>
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(gif.id)}
+                  onChange={() => toggleSelect(gif.id)}
+                />
+                <span className="gif-select-box" />
+              </label>
+              <img src={`${API_ORIGIN}/${gif.filename}`} alt={gif.title} />
               <div className="gif-card-info">
                 <div className="gif-card-header">
                   <div className="gif-card-titles">
@@ -194,7 +278,7 @@ function AdminPanel() {
 
             <div className="modal-body">
               <div className="modal-gif">
-                <img src={`http://localhost:5000/${selectedGif.filename}`} alt={selectedGif.title} />
+                <img src={`${API_ORIGIN}/${selectedGif.filename}`} alt={selectedGif.title} />
               </div>
 
               <div className="modal-info">

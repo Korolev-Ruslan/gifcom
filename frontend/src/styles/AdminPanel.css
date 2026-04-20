@@ -4,6 +4,110 @@
   overflow: visible;
 }
 
+.admin-gif-card {
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.admin-gif-card.selected {
+  border-color: var(--primary-color);
+}
+
+.gif-select {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.gif-select input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gif-select-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  position: relative;
+}
+
+.gif-select input:checked + .gif-select-box {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.gif-select input:checked + .gif-select-box::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+}
+
+.bulk-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 18px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+}
+
+.bulk-left,
+.bulk-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bulk-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.bulk-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.bulk-approve-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--success-color);
+  background: var(--success-color);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.bulk-approve-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .gif-card-info {
   padding: 12px;
   position: absolute;
@@ -237,7 +341,7 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   font-size: 14px;
 }
 
@@ -259,7 +363,7 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   font-size: 14px;
 }
 
@@ -276,7 +380,7 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   font-size: 14px;
 }
 
@@ -284,4 +388,3 @@
   filter: brightness(0.9);
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
 }
-

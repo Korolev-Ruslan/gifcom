@@ -14,7 +14,7 @@
 }
 
 .auth-modal {
-  background: white;
+  background: var(--bg-primary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   border: 1px solid var(--border-color);
@@ -163,4 +163,3 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-

@@ -4,6 +4,8 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   role VARCHAR(50) DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+  is_bot_user BOOLEAN DEFAULT FALSE,
+  telegram_id BIGINT UNIQUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -14,6 +16,9 @@ CREATE TABLE gifs (
   title VARCHAR(255),
   description TEXT,
   status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+  is_bot_upload BOOLEAN DEFAULT FALSE,
+  is_guest_upload BOOLEAN DEFAULT FALSE,
+  telegram_id BIGINT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -78,6 +83,8 @@ CREATE INDEX idx_gif_tags_tag_id ON gif_tags(tag_id);
 CREATE INDEX idx_subscriptions_follower ON subscriptions(follower_id);
 CREATE INDEX idx_subscriptions_following ON subscriptions(following_id);
 CREATE INDEX idx_tags_name ON tags(name);
+CREATE INDEX idx_users_telegram_id ON users(telegram_id);
+CREATE INDEX idx_gifs_telegram_id ON gifs(telegram_id);
 CREATE TABLE notifications (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,

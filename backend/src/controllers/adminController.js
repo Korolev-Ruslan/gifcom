@@ -7,7 +7,18 @@ import path from 'path';
 export const getPendingGifs = async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT g.*, u.username FROM gifs g JOIN users u ON g.user_id = u.id WHERE g.status = $1 ORDER BY g.created_at DESC',
+      `SELECT g.*, u.username,
+              COALESCE(
+                ARRAY_REMOVE(ARRAY_AGG(DISTINCT t.name), NULL),
+                '{}'
+              ) AS tags
+       FROM gifs g
+       JOIN users u ON g.user_id = u.id
+       LEFT JOIN gif_tags gt ON g.id = gt.gif_id
+       LEFT JOIN tags t ON gt.tag_id = t.id
+       WHERE g.status = $1
+       GROUP BY g.id, u.username
+       ORDER BY g.created_at DESC`,
       ['pending']
     );
     res.json(result.rows);
@@ -142,15 +153,40 @@ export const updatePendingGif = async (req, res) => {
     }
 
     const result = await pool.query(
-      'UPDATE gifs SET title = $1, description = $2, tags = $3 WHERE id = $4 AND status = $5 RETURNING *',
-      [title, description || null, tags || [], id, 'pending']
+      'UPDATE gifs SET title = $1, description = $2, updated_at = NOW() WHERE id = $3 AND status = $4 RETURNING *',
+      [title, description || null, id, 'pending']
     );
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'GIF not found or is not pending' });
     }
 
-    res.json(result.rows[0]);
+    await pool.query('DELETE FROM gif_tags WHERE gif_id = $1', [id]);
+
+    for (const rawTag of tags || []) {
+      const tagName = String(rawTag || '').trim().toLowerCase();
+      if (!tagName) continue;
+
+      const tagResult = await pool.query(
+        `INSERT INTO tags (name)
+         VALUES ($1)
+         ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
+         RETURNING id`,
+        [tagName]
+      );
+
+      await pool.query(
+        `INSERT INTO gif_tags (gif_id, tag_id)
+         VALUES ($1, $2)
+         ON CONFLICT DO NOTHING`,
+        [id, tagResult.rows[0].id]
+      );
+    }
+
+    res.json({
+      ...result.rows[0],
+      tags: tags || []
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update gif' });

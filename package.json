@@ -1,5 +1,20 @@
 {
+  "name": "gifcom",
+  "version": "1.0.0",
+  "description": "GIF sharing platform",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:bot": "cd telegram-bot && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview",
+    "start:bot": "cd telegram-bot && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../telegram-bot && npm install"
+  },
   "dependencies": {
+    "concurrently": "^9.2.1",
     "fluent-ffmpeg": "^2.1.3"
   }
 }

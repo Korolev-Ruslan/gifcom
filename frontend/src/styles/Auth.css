@@ -42,7 +42,7 @@
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .auth-form input:focus {
@@ -65,7 +65,7 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   margin-top: 8px;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
@@ -84,4 +84,3 @@
 .auth-form .error {
   margin-bottom: 16px;
 }
-

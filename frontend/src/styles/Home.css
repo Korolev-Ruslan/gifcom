@@ -1,7 +1,7 @@
 .main-content {
   max-width: 100%;
   margin: 0 auto;
-  padding: 8px;
+  padding: 0 8px 0 0;
   background-color: var(--bg-primary);
   min-height: calc(100vh - 60px);
 }
@@ -28,7 +28,7 @@
   -webkit-backdrop-filter: var(--backdrop-blur) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  transition: all 0.3s ease !important;
+  transition: all 0.1s ease !important;
   text-decoration: none !important;
   color: inherit !important;
   position: relative !important;
@@ -75,4 +75,3 @@
   padding: 40px 16px;
   color: var(--text-tertiary);
 }
-

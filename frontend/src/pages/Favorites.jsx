@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { favoriteApi } from '../api/api';
+import { API_ORIGIN } from '../config';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { Link } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
+import Icon, { FavoritesIcon } from '../components/Icon';
 import '../styles/Home.css';
 
 function Favorites() {
@@ -42,7 +44,7 @@ function Favorites() {
 
   return (
     <div className="main-content">
-      <h1>❤️ Избранное</h1>
+      <h1>Избранное</h1>
       
       {error && <div className="error">{error}</div>}
       
@@ -62,7 +64,7 @@ function Favorites() {
         >
           {favorites.map((gif) => (
             <Link key={gif.id} to={`/gif/${gif.id}`} className="gif-card">
-              <img src={`http://localhost:3000/${gif.filename}`} alt={gif.title} />
+              <img src={`${API_ORIGIN}/${gif.filename}`} alt={gif.title} />
             </Link>
           ))}
         </Masonry>

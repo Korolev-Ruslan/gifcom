@@ -32,7 +32,6 @@ export const uploadGif = async (req, res) => {
     const errors = [];
 
     for (const file of req.files) {
-      // Ищем хеш по временному имени файла (filename), не по оригинальному имени
       let fileHash = hashesMap[file.filename] || hashesMap[file.originalname];
       
       if (!fileHash) {
@@ -76,11 +75,9 @@ export const uploadGif = async (req, res) => {
         fileHash
       );
 
-      // Переименовываем файл в формат GIF{номер}_{название}
       const newFilename = renameGifFile(file.filename, gifTitle);
       
       if (newFilename) {
-        // Обновляем запись в БД с новым именем файла
         await Gif.updateFilename(gif.id, newFilename);
         gif.filename = newFilename;
       }
@@ -184,11 +181,9 @@ export const uploadVideo = async (req, res) => {
         fileHash
       );
 
-      // Переименовываем файл в формат GIF{номер}_{название}
       const newFilename = renameGifFile(path.basename(gifPath), gifTitle);
       
       if (newFilename) {
-        // Обновляем запись в БД с новым именем файла
         await Gif.updateFilename(gif.id, newFilename);
         gif.filename = newFilename;
       }

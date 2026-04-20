@@ -1,5 +1,5 @@
 .navbar {
-  background: var(--navbar-bg);
+  background: var(--backdrop-blur);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   color: var(--navbar-text);
@@ -7,21 +7,19 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .navbar .container {
   display: flex;
   justify-content: space-between;
-  background: var(--navbar-bg);
   align-items: center;
   max-width: 100%;
-  padding: 12px 20px 12px 12px;
+  padding: 7px 20px 7px 12px;
 }
 
 .nav-left {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 50px;
   min-width: auto;
 }
@@ -37,9 +35,9 @@
 .logo {
   font-size: 22px;
   font-weight: bold;
-  color: rgb(0, 0, 0);
+  color: var(--logo-color);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .logo:hover {
@@ -51,13 +49,13 @@
   align-items: center;
   width: 100%;
   max-width: 500px;
-  background: white;
+  background: rgba(0, 0, 0, 0.05);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .search-btn svg {
@@ -75,8 +73,8 @@
 }
 
 .search-btn {
-  background: white;
-  color: white;
+  background: rgba(255, 255, 255, 0);
+  color: var(--text-primary);
   border: none;
   width: 48px;
   height: 100%;
@@ -86,7 +84,7 @@
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .search-btn:hover {
@@ -102,10 +100,10 @@
 }
 
 .menu-toggle {
-  background: rgba(255, 255, 255, 0);
+  background: rgba(0, 0, 0, 0);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
-  color: rgb(0, 0, 0);
+  color: var(--text-primary);
   font-size: 24px;
   cursor: pointer;
   width: 40px;
@@ -114,14 +112,13 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .btn-icon {
   background: var(--bg-primary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
-  border: 1px solid var(--border-color);
   color: var(--text-primary);
   cursor: pointer;
   font-size: 18px;
@@ -133,7 +130,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .btn-icon .icon {
@@ -160,14 +157,14 @@
 }
 
 .btn-plus {
-  background: rgba(255, 0, 0, 0.750);
+  background: rgb(255, 0, 0);
   color: white;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   font-size: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,7 +182,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .avatar-btn:hover {
@@ -210,7 +207,7 @@
   font-weight: 500;
   padding: 10px 18px;
   border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .nav-link:hover {
@@ -223,14 +220,17 @@
   min-height: calc(100vh - 70px);
 }
 
+.layout-full {
+  width: 100%;
+}
+
 .sidebar {
-  width: 280px;
-  border-right: 1px solid var(--border-color);
+  width: 260px;
   overflow-y: auto;
   position: sticky;
   top: 70px;
   height: calc(100vh - 70px);
-  transition: width 0.3s ease;
+  transition: width 0.1s ease;
   background: var(--bg-primary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
@@ -245,6 +245,10 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+
+.main-content.full {
+  width: 100%;
 }
 
 .badge {

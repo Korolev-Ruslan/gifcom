@@ -1,6 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { useTheme } from "./context/ThemeContext";
 import Home from "./pages/Home";
 import Upload from "./pages/Upload";
 import AdminPanel from "./pages/AdminPanel";
@@ -12,14 +11,13 @@ import NotificationsModal from "./components/NotificationsModal";
 import AvatarMenu from "./components/AvatarMenu";
 import AuthModal from "./components/AuthModal";
 import SearchAutocomplete from "./components/SearchAutocomplete";
-import Icon, { NotificationsIcon } from "./components/Icon";
+import Icon, { NotificationsIcon, HamburgerIcon, SearchIcon } from "./components/Icon";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Favorites from "./pages/Favorites";
 import { notificationApi } from "./api/api";
 
-function App() {
-  const { theme } = useTheme();
+function AppInner() {
   const [user, setUser] = useState(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -41,8 +39,7 @@ function App() {
     try {
       const response = await notificationApi.getUnreadCount(token);
       setUnreadCount(response.data.unread_count);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleLogout = () => {
@@ -77,18 +74,24 @@ function App() {
     fetchUnreadCount();
   };
 
+  const location = useLocation();
+  const isGifDetail = location.pathname.startsWith("/gif/");
+
   return (
-    <Router future={{ v7_startTransition: true }}>
+    <>
       <nav className="navbar">
         <div className="container">
           <div className="nav-left">
-            <button
-              className="menu-toggle"
-              aria-label="Toggle sidebar"
-              onClick={toggleSidebar}
-            >
-              ☰
-            </button>
+            {!isGifDetail && (
+              <button
+                className="menu-toggle"
+                aria-label="Toggle sidebar"
+                onClick={toggleSidebar}
+              >
+                <HamburgerIcon />
+              </button>
+            )}
+
             <Link to="/" className="logo">
               GIFCOM
             </Link>
@@ -97,19 +100,8 @@ function App() {
           <div className="nav-center">
             <form className="search-form" onSubmit={(e) => e.preventDefault()}>
               <SearchAutocomplete />
-<button className="search-btn">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="M21 21l-4.35-4.35" />
-                </svg>
+              <button className="search-btn">
+                <SearchIcon />
               </button>
             </form>
           </div>
@@ -180,11 +172,13 @@ function App() {
           </div>
         </div>
       </nav>
-      <div className="layout">
-        <aside className={`sidebar ${sidebarCollapsed ? "collapsed" : ""}`}>
-          <Sidebar collapsed={sidebarCollapsed} />
-        </aside>
-        <main className={`main-content ${sidebarCollapsed ? "collapsed" : ""}`}>
+      <div className={`layout ${isGifDetail ? "layout-full" : ""}`}>
+        {!isGifDetail && (
+          <aside className={`sidebar ${sidebarCollapsed ? "collapsed" : ""}`}>
+            <Sidebar collapsed={sidebarCollapsed} />
+          </aside>
+        )}
+        <main className={`main-content ${sidebarCollapsed ? "collapsed" : ""} ${isGifDetail ? "full" : ""}`}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
@@ -247,6 +241,14 @@ function App() {
         onClose={() => setShowAuthModal(false)}
         onLoginSuccess={setUser}
       />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router future={{ v7_startTransition: true }}>
+      <AppInner />
     </Router>
   );
 }

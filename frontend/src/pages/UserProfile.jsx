@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { gifApi, userApi } from '../api/api'
+import { API_ORIGIN } from '../config'
 import '../styles/UserProfile.css'
 
 function UserProfile({ user }) {
@@ -89,7 +90,7 @@ function UserProfile({ user }) {
         <div className="gifs-grid">
           {gifs.map((gif) => (
             <Link key={gif.id} to={`/gif/${gif.id}`} className="user-gif-card">
-              <img src={`http://localhost:3000/${gif.filename}`} alt={gif.title} />
+              <img src={`${API_ORIGIN}/${gif.filename}`} alt={gif.title} />
             </Link>
           ))}
         </div>

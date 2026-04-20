@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { gifApi, commentApi, ratingApi, userApi, adminApi, favoriteApi } from '../api/api'
+import { gifApi, ratingApi, userApi, adminApi, favoriteApi } from '../api/api'
+import { API_ORIGIN } from '../config'
+import Masonry from 'react-masonry-css'
 import '../styles/GifDetail.css'
 
 const REACTIONS = ['😀', '😍', '🤣', '😢', '😡']
@@ -9,29 +11,38 @@ function GifDetail({ user }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const [gif, setGif] = useState(null)
-  const [comments, setComments] = useState([])
   const [reactions, setReactions] = useState({})
   const [userReaction, setUserReaction] = useState(null)
-  const [commentText, setCommentText] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
+  const [suggestedGifs, setSuggestedGifs] = useState([])
+  const [suggestedLoading, setSuggestedLoading] = useState(false)
+  const breakpointColumnsObj = {
+    default: 6,
+    1920: 5,
+    1280: 4,
+    720: 4,
+    480: 2
+  }
 
   useEffect(() => {
     fetchData()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [id])
 
   const fetchData = async () => {
+    setLoading(true)
+    setError('')
     try {
       const gifRes = await gifApi.getById(id)
       setGif(gifRes.data)
 
-      const commentsRes = await commentApi.get(id)
-      setComments(commentsRes.data)
-
       const reactionsRes = await ratingApi.get(id)
       setReactions(reactionsRes.data)
+
+      await fetchSuggestions(gifRes.data)
 
       if (user) {
         const userReactionRes = await ratingApi.getUserReaction(id, localStorage.getItem('token'))
@@ -51,19 +62,34 @@ function GifDetail({ user }) {
     }
   }
 
-  const handleAddComment = async (e) => {
-    e.preventDefault()
-    if (!user) {
-      alert('Войдите для добавления комментария')
-      return
-    }
-
+  const fetchSuggestions = async (gifData) => {
+    setSuggestedLoading(true)
     try {
-      await commentApi.add(id, commentText, localStorage.getItem('token'))
-      setCommentText('')
-      fetchData()
+      const tags = (gifData?.tags || []).filter(Boolean)
+      let items = []
+
+      if (tags.length > 0) {
+        const tagRes = await gifApi.search(null, tags[0])
+        const tagItems = Array.isArray(tagRes.data) ? tagRes.data : (tagRes.data?.gifs || [])
+        items = tagItems.filter(item => item.id !== gifData.id)
+      }
+
+      if (items.length < 8) {
+        const moreRes = await gifApi.getApproved({ limit: 12, exclude_ids: gifData.id })
+        const moreItems = moreRes.data?.gifs || []
+        const existing = new Set(items.map(item => item.id))
+        moreItems.forEach(item => {
+          if (!existing.has(item.id) && item.id !== gifData.id) {
+            items.push(item)
+          }
+        })
+      }
+
+      setSuggestedGifs(items.slice(0, 12))
     } catch (err) {
-      setError('Ошибка при добавлении комментария')
+      setSuggestedGifs([])
+    } finally {
+      setSuggestedLoading(false)
     }
   }
 
@@ -164,25 +190,15 @@ function GifDetail({ user }) {
   if (!gif) return <div className="container"><p>GIF не найдена</p></div>
 
   return (
-    <div className="container">
-      <div className="gif-detail">
-        <div className="gif-display">
-          <img src={`http://localhost:3000/${gif.filename}`} alt={gif.title} />
-          <button onClick={handleDownload} className="download-btn">
-            ⬇ Скачать GIF
-          </button>
-          {user && (
-         <button 
-          onClick={handleToggleFavorite} 
-          className={`favorite-btn ${isFavorite ? 'active' : ''}`}
-          title={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
-         >
-          {isFavorite ? '❤️ В избранном' : '🤍 В избранное'}
-        </button>
-          )}
-        </div>
+    <div className="container gif-detail-page">
+      <div className="gif-detail-wrapper">
+        <div className="gif-detail">
+          <div className="gif-display">
+            <img src={`${API_ORIGIN}/${gif.filename}`} alt={gif.title} />
+            <div className="gif-actions" />
+          </div>
 
-        <div className="gif-info">
+          <div className="gif-info">
           <h1>{gif.title}</h1>
           
           <div className="author-section">
@@ -200,6 +216,18 @@ function GifDetail({ user }) {
                   {isSubscribed ? '✓ Подписан' : '+ Подписаться'}
                 </button>
               )}
+              {user && (
+                <button 
+                  onClick={handleToggleFavorite} 
+                  className={`favorite-btn ${isFavorite ? 'active' : ''}`}
+                  title={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
+                >
+                  {isFavorite ? '❤️ В избранном' : '🤍 В избранное'}
+                </button>
+              )}
+              <button onClick={handleDownload} className="download-btn">
+                ⬇ Скачать GIF
+              </button>
               {user && user.role === 'admin' && (
                 <button onClick={handleDelete} className="delete-btn">
                   🗑 Удалить
@@ -221,7 +249,6 @@ function GifDetail({ user }) {
           )}
 
           <div className="reactions-section">
-            <h3>Реакции</h3>
             <div className="reactions">
               {REACTIONS.map((reaction) => (
                 <button
@@ -236,37 +263,37 @@ function GifDetail({ user }) {
               ))}
             </div>
           </div>
+
         </div>
       </div>
+      </div>
 
-      <div className="comments-section">
-        <h2>Комментарии</h2>
-
-        {user && (
-          <form onSubmit={handleAddComment} className="comment-form">
-            <textarea
-              placeholder="Добавить комментарий..."
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-              required
-            />
-            <button type="submit">Отправить</button>
-          </form>
+      <div className="suggested-section">
+        {suggestedLoading ? (
+          <p>Загружается...</p>
+        ) : suggestedGifs.length === 0 ? (
+          <p>Пока нет рекомендаций</p>
+        ) : (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="gifs-grid"
+            columnClassName="gif-column"
+          >
+            {suggestedGifs.map((item) => (
+              <Link key={item.id} to={`/gif/${item.id}`} className="gif-card suggested-card">
+                <img
+                  src={`${API_ORIGIN}/${item.filename}`}
+                  alt={item.title || 'GIF'}
+                  loading="lazy"
+                />
+                <div className="suggested-meta">
+                  <span className="suggested-title">{item.title || 'Без названия'}</span>
+                  <span className="suggested-author">@{item.username}</span>
+                </div>
+              </Link>
+            ))}
+          </Masonry>
         )}
-
-        <div className="comments-list">
-          {comments.length === 0 ? (
-            <p>Комментариев нет</p>
-          ) : (
-            comments.map((comment) => (
-              <div key={comment.id} className="comment">
-                <strong>{comment.username}</strong>
-                <p>{comment.text}</p>
-                <small>{new Date(comment.created_at).toLocaleDateString()}</small>
-              </div>
-            ))
-          )}
-        </div>
       </div>
     </div>
   )

@@ -38,7 +38,7 @@
   -webkit-backdrop-filter: var(--backdrop-blur);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .stat:hover {
@@ -66,7 +66,7 @@
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   white-space: nowrap;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
@@ -102,7 +102,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--glass-shadow);
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   text-decoration: none;
   color: inherit;
 }

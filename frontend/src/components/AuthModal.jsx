@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
+import { API_URL } from '../config'
 import '../styles/AuthModal.css'
 
 export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
@@ -14,8 +15,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   useOutsideClick(modalRef, onClose)
 
   if (!isOpen) return null
-
-  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api'
 
   const handleLogin = async (e) => {
     e.preventDefault()

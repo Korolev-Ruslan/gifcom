@@ -64,7 +64,6 @@
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
@@ -87,6 +86,16 @@
 
 .theme-toggle-btn .icon-text {
   line-height: 24px;
+}
+
+[data-theme="light"] .theme-toggle-btn .icon svg {
+  color: #ffd43b;
+  stroke: #ffd43b;
+  fill: #ffd43b;
+}
+
+[data-theme="dark"] .theme-toggle-btn .icon svg {
+  filter: drop-shadow(0 0 4px rgb(0, 0, 0));
 }
 
 .theme-toggle-btn:hover {

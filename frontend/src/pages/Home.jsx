@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { gifApi } from '../api/api'
+import { API_ORIGIN } from '../config'
 import { Link } from 'react-router-dom'
 import TagNav from '../components/TagNav'
 import Masonry from 'react-masonry-css'
@@ -107,7 +108,7 @@ function Home() {
         >
           {gifs.map((gif) => (
             <Link key={gif.id} to={`/gif/${gif.id}`} className="gif-card">
-              <img src={`http://localhost:3000/${gif.filename}`} alt={gif.title} />
+              <img src={`${API_ORIGIN}/${gif.filename}`} alt={gif.title} />
             </Link>
           ))}
         </Masonry>

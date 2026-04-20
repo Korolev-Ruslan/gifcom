@@ -42,7 +42,7 @@
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .file-upload-label:hover {
@@ -402,7 +402,7 @@
   -webkit-backdrop-filter: var(--backdrop-blur);
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .option-row select:focus {
@@ -442,7 +442,7 @@
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 .upload-form input[type="text"]:focus,
@@ -472,7 +472,7 @@
   font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   margin-top: 8px;
 }
 
